@@ -5,7 +5,7 @@
 	"description" : "Extension that work with tabs surrounded by new tabs",
 	"homepage_url": "https://github.com/no1fushi/ntab-2",
 	"version": "1.0.0",
-	"optional_permissions": ["tabs"],
+	"permissions": ["tabs", "contextMenus"],
 	"background": {
 		"scripts": ["js/background.js"],
 		"persistent": false
