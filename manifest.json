@@ -3,6 +3,7 @@
 	"name": "ntab ntab",
 	"short_name": "ntab*2",
 	"description" : "Extension that work with tabs surrounded by new tabs",
+	"homepage_url": "https://github.com/no1fushi/ntab-2",
 	"version": "1.0.0",
 	"optional_permissions": ["tabs"],
 	"icons": {
