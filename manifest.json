@@ -1,11 +1,11 @@
  {
-	"manifest_version": 2
+	"manifest_version": 2,
 	"name": "ntab ntab",
 	"short_name": "ntab*2",
 	"description" : "Extension that work with tabs surrounded by new tabs",
 	"homepage_url": "https://github.com/no1fushi/ntab-2",
 	"version": "1.0.0",
-	"permissions": ["tabs", "contextMenus"],
+	"permissions": ["tabs", "menus"],
 	"background": {
 		"scripts": ["js/background.js"],
 		"persistent": false
