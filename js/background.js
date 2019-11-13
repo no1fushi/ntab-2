@@ -1,20 +1,28 @@
 function onCreated() {
-  if (browser.runtime.lastError) {
-    console.log(`Error: ${browser.runtime.lastError}`);
+  if (chrome.runtime.lastError) {
+    console.log(`Error: ${chrome.runtime.lastError}`);
   } else {
     console.log("Item created successfully");
   }
 }
 
-function onError(error) {
-  console.log(`Error: ${error}`);
-}
+chrome.contextMenus.create({
+  id: "getTabList",
+  title: "GetTabList",
+  contexts: ["all"]
+}, onCreated);
 
-browser.menus.create({
-  id: "separator-1",
+chrome.contextMenus.create({
+  id: "getTabList2",
+  title: "GetTabList2",
+  contexts: ["all"]
+}, onCreated);
+
+chrome.contextMenus.create({
+  id: "separator",
   type: "separator",
   contexts: ["all"]
 }, onCreated);
 
-browser.menus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener((info, tab) => {
 });
