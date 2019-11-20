@@ -30,14 +30,10 @@ const countNewtab = tabs => {
 	return newtab;
 }
 
-const logTabs = tabs => {
-	outputTabs(tabs);
-	const newtab = countNewtab(tabs);
-}
-
 const getTabs = () => {
   chrome.tabs.query({currentWindow: true}, (tabs) => {
-    logTabs(tabs);
+    outputTabs(tabs);
+    const newtab = countNewtab(tabs);
   });
 }
 
