@@ -7,8 +7,32 @@ const onCreated = () => {
   }
 }
 
+const outputTabs = tabs => {
+	console.groupCollapsed("URLs")
+	for(let tab of tabs) console.log(tab.url);
+	console.groupEnd();
+}
+
+const countNewtab = tabs => {
+
+	let newtab = new Array();
+	let count = 0;
+
+	const firefox = 'about:newtab'
+
+	for(let tab of tabs) {
+		if(tab.url.indexOf(firefox) === 0) newtab.push(count);
+    	count += 1;
+	}
+
+	console.log("↓ newtab[]");
+	console.log(newtab);
+	return newtab;
+}
+
 const logTabs = tabs => {
-  for(let tab of tabs) console.log(tab.url);
+	outputTabs(tabs);
+	const newtab = countNewtab(tabs);
 }
 
 const getTabs = () => {
@@ -35,7 +59,6 @@ chrome.contextMenus.create({
   type: "separator",
   contexts: ["all"]
 }, onCreated);
-
 
 // Event listener
 chrome.contextMenus.onClicked.addListener((info, tab) => {
