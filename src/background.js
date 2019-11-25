@@ -1,7 +1,12 @@
+// namespace
+if (!("browser" in window)) {
+  window.browser = chrome;
+}
+
 // Function definition
 const onCreated = () => {
-  if(chrome.runtime.lastError) {
-    console.warn(`Error: ${chrome.runtime.lastError}`);
+  if(browser.runtime.lastError) {
+    console.warn(`Error: ${browser.runtime.lastError}`);
   } else {
     console.log("Item created successfully");
   }
@@ -22,7 +27,8 @@ const countNewtab = tabs => {
 
   const firefox = "^about:newtab$";
   const chrome =  "^chrome:\/\/newtab\/$";
-  const browsers = [chrome, firefox];
+  const opera =  "^chrome:\/\/startpageshared\/$";
+  const browsers = [chrome, firefox, opera];
   const regexp = new RegExp(browsers.join("|", "gm"))
 
   tabs.some((element, index) => {
@@ -35,13 +41,13 @@ const countNewtab = tabs => {
 }
 
 const delTabs = (target, tabs) => {
-  chrome.tabs.remove(target, () => console.log("RemoveTabs"));
+  browser.tabs.remove(target, () => console.log("RemoveTabs"));
 }
 
 const bmTabs = (target, tabs) => {
   for(let tab of tabs) {
     if(target.includes(tab.id) && tab.id != target[0]) {
-      chrome.bookmarks.create({
+      browser.bookmarks.create({
         title: tab.title,
         url: tab.url
       }, bookmarkItem => console.log("Bookmark added with ID: " + bookmarkItem.id));
@@ -50,33 +56,33 @@ const bmTabs = (target, tabs) => {
 }
 
 // Create contextmenus
-chrome.contextMenus.create({
+browser.contextMenus.create({
   id: "del",
   title: "delete Tabs",
   contexts: ["all"]
 }, onCreated);
 
-chrome.contextMenus.create({
+browser.contextMenus.create({
   id: "bm",
   title: "bookmark Tabs",
   contexts: ["all"]
 }, onCreated);
 
-chrome.contextMenus.create({
+browser.contextMenus.create({
   id: "bm-del",
   title: "bookmark and delete Tabs",
   contexts: ["all"]
 }, onCreated);
 
-chrome.contextMenus.create({
+browser.contextMenus.create({
   id: "separator",
   type: "separator",
   contexts: ["all"]
 }, onCreated);
 
 // Event listener
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  chrome.tabs.query({currentWindow: true}, tabs => {
+browser.contextMenus.onClicked.addListener((info, tab) => {
+  browser.tabs.query({currentWindow: true}, tabs => {
 
     outputTabs(tabs);
     const newtab = countNewtab(tabs);
