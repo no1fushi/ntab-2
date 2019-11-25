@@ -7,7 +7,7 @@
 	"version": "1.0.0",
 	"permissions": ["tabs", "contextMenus"],
 	"background": {
-		"scripts": ["js/background.js"],
+		"scripts": ["src/background.js"],
 		"persistent": false
 	}
 }
