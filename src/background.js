@@ -44,15 +44,39 @@ const delTabs = (target, tabs) => {
   browser.tabs.remove(target, () => console.log("RemoveTabs"));
 }
 
+const createBm = (title, url, index) => {
+  browser.bookmarks.create({
+    title: title,
+    url: url,
+    parentId: index
+  }, bookmarkItem => console.log("Bookmark added with ID: " + bookmarkItem.id));
+}
+
 const bmTabs = (target, tabs) => {
-  for(let tab of tabs) {
-    if(target.includes(tab.id) && tab.id != target[0]) {
-      browser.bookmarks.create({
-        title: tab.title,
-        url: tab.url
-      }, bookmarkItem => console.log("Bookmark added with ID: " + bookmarkItem.id));
-    }
-  }
+  chrome.bookmarks.getTree(bookmark => {
+
+    const root = bookmark[0]["children"][1];
+    const date = new Date();
+    const parent = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    const child = date.getHours() + "-" + date.getMinutes();
+
+    console.log(root);
+    console.log(child);
+
+    browser.bookmarks.search(parent, contents => {
+      if(contents.length === 0) {
+        createBm(parent, null, root.id);
+        console.log("Create " + parent);
+        bmTabs(target, tabs);
+      } else {
+        for(let tab of tabs) {
+          if(target.includes(tab.id) && tab.id != target[0]) {
+            createBm(tab.title, tab.url, contents[0].id);
+          }
+        }
+      }
+    })
+  })
 }
 
 // Create contextmenus
