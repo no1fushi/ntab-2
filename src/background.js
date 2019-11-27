@@ -69,9 +69,17 @@ const bmTabs = (target, tabs) => {
         console.log("Create " + parent);
         bmTabs(target, tabs);
       } else {
+
+        let flag = null;
+        for(let bmIndex in root["children"]) {
+          for(let contentIndex in contents) {
+            if(contents[contentIndex].id === root["children"][bmIndex].id) flag = contentIndex;
+          }
+        }
+
         for(let tab of tabs) {
           if(target.includes(tab.id) && tab.id != target[0]) {
-            createBm(tab.title, tab.url, contents[0].id);
+            createBm(tab.title, tab.url, contents[flag].id);
           }
         }
       }
